@@ -5,7 +5,7 @@ using UnityEngine;
 public class MealData : ScriptableObject
 {
 	public string Name;
-	[Header("À\ÂI¹Ï¤ù")]
+	[Header("Error?")]
 	public Sprite sprite;
 	public List<IngredientData> NeedIngredients;
 }

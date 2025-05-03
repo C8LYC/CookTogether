@@ -6,6 +6,7 @@ using UnityEngine;
 public class IngredientData : ScriptableObject
 {
 	public string Name;
-	[Header("­¹§÷¹Ï¤ù")]
+	public Color color;
+	[Header("ï¿½ï¿½ï¿½ï¿½ï¿½Ï¤ï¿½")]
 	public Sprite sprite;
 }
