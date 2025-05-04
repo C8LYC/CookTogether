@@ -6,7 +6,7 @@ public class IngredientSource : Block
 {
     public override void Interact()
     {
-        player.GetComponent<PlayerInventory>().Add(heldIngredient);
+        playerInventory.Add(heldIngredient);
     }
 
     // Start is called before the first frame update

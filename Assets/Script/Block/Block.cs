@@ -6,6 +6,7 @@ public class Block : MonoBehaviour
 {
     [SerializeField] protected IngredientData heldIngredient;
     protected GameObject player;
+    protected PlayerInventory playerInventory;
 
     [SerializeField] private GameObject ingredientIndicatorPrefab;
     private GameObject ingredientIndicator;
@@ -18,6 +19,7 @@ public class Block : MonoBehaviour
     void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        playerInventory = player.GetComponent<PlayerInventory>();
     }
 
     void Update()

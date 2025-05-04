@@ -6,7 +6,6 @@ public class NormalTable : Block
 {
     public override void Interact()
     {
-        PlayerInventory playerInventory = player.GetComponent<PlayerInventory>();
         IngredientData playerIngredient = playerInventory.Get();
 
         if (playerIngredient && !heldIngredient)

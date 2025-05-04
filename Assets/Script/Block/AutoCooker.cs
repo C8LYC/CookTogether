@@ -14,7 +14,6 @@ public class AutoCooker : Block
 
     public override void Interact()
     {
-        PlayerInventory playerInventory = player.GetComponent<PlayerInventory>();
         IngredientData playerIngredient = playerInventory.Get();
 
         switch (state)
