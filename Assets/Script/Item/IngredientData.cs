@@ -14,7 +14,7 @@ public class IngredientData : ScriptableObject
 	class conbinedIngredient
 	{
 		public IngredientData result;
-		public IngredientData initial;
+		public IngredientData combinedWith;
 	}
 
 	
@@ -23,11 +23,11 @@ public class IngredientData : ScriptableObject
 	public Color color; 
 	public Sprite sprite;
 
-	public IngredientData mixedIngredient(IngredientData addIngredient)
+	public IngredientData mixedIngredient(IngredientData addedIngredient)
 	{
 		foreach (var ingredient in combinedIngredient)
 		{
-			if (ingredient.initial == addIngredient)
+			if (ingredient.combinedWith == addedIngredient)
 			{
 				return ingredient.result;
 			}

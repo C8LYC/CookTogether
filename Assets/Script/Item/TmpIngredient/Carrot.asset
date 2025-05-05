@@ -16,7 +16,7 @@ MonoBehaviour:
   Name: Carrot
   combinedIngredient:
   - result: {fileID: 11400000, guid: 63b840f16b4f43b4ebc9cf6d89165702, type: 2}
-    initial: {fileID: 11400000}
+    combinedWith: {fileID: 11400000}
   ingredientPrefab: {fileID: -8354200155130330652, guid: e24609a09e9a91d45b824c71f21a0406,
     type: 3}
   color: {r: 1, g: 0.37034538, b: 0.035848916, a: 0}

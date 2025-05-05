@@ -15,9 +15,10 @@ public class Player : MonoBehaviour
     private Vector3 targetMoveInput;
     
     [Header("Item")]
-    private  Item _itemHold;
-    public Item itemHold=> _itemHold;
+    private Item _itemHold;
+    public Item itemHold => _itemHold;
     [SerializeField] Transform itemHoldPoint;
+
     public void SetItemHold(Item item)
     {
         if (item != null)
@@ -32,6 +33,7 @@ public class Player : MonoBehaviour
             _itemHold = null;
         }
     }
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -48,7 +50,6 @@ public class Player : MonoBehaviour
 
         // Calculate target speed vector
         targetMoveInput = new Vector3(x, 0f, z).normalized;
-        
     }
 
     void FixedUpdate()
@@ -58,5 +59,12 @@ public class Player : MonoBehaviour
         // Move
         Vector3 moveVelocity = moveInput * moveSpeed;
         rb.velocity = new Vector3(moveVelocity.x, rb.velocity.y, moveVelocity.z);
+
+        // Rotate to face movement direction
+        if (moveInput != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(moveInput, Vector3.up);
+            rb.rotation = Quaternion.Lerp(rb.rotation, targetRotation, movementLerpSpeed * Time.fixedDeltaTime);
+        }
     }
 }
