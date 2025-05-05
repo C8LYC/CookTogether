@@ -7,7 +7,7 @@ public class AutoCooker : Block
 {
     private enum CookingState { Idle, Cooking, Cooked }
     private CookingState state = CookingState.Idle;
-
+    
     [SerializeField] private float cookTime = 5.0f;
     private float cookTimer = 0f;
     
@@ -182,6 +182,22 @@ public class AutoCooker : Block
                 // i don't know what it can be ...
             }
         }
+    }
+    private void OnValidate()
+    {
+        allowedIngredients.Clear();
+        // automatic add all ingredient data from cookedIngredients
+        foreach (var cookedIngredient in cookedIngredients)
+        {
+            foreach (var ingredient in cookedIngredient.ingredients)
+            {
+                if (!allowedIngredients.Contains(ingredient.ingredient))
+                {
+                    allowedIngredients.Add(ingredient.ingredient);
+                }
+            }
+        }
+        
     }
 }
 

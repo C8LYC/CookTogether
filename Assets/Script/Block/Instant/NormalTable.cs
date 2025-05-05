@@ -7,6 +7,7 @@ public class NormalTable : Block
 {
     [SerializeField] Item _itemHold;
     [SerializeField] Transform _itemHoldPivot;
+    
     public override void Interact(Player player)
     {
        

@@ -13,6 +13,7 @@ public class Block : MonoBehaviour
         Control     // Controls a mechanism (levers, buttons): no time limited 
     }
     
+    
     public virtual void Interact(Player player)
     {
         Debug.Log($"{name} was interacted with.");

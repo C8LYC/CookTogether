@@ -41,30 +41,55 @@ public class Player : MonoBehaviour
                          RigidbodyConstraints.FreezeRotationX | 
                          RigidbodyConstraints.FreezeRotationZ;
     }
+    private bool movementRestricted = false;
 
+    public void RestrictMovement(bool restrict)
+    {
+        movementRestricted = restrict;
+        if (restrict)
+        {
+           
+            rb.velocity = Vector3.zero;
+            moveInput = Vector3.zero;
+            targetMoveInput = Vector3.zero;
+        }
+    }
     void Update()
     {
-        // Get WASD / Arrow input
-        float x = Input.GetAxisRaw("Horizontal");
-        float z = Input.GetAxisRaw("Vertical");
-
-        // Calculate target speed vector
-        targetMoveInput = new Vector3(x, 0f, z).normalized;
+        if (!movementRestricted)
+        {
+            
+            float x = Input.GetAxisRaw("Horizontal");
+            float z = Input.GetAxisRaw("Vertical");
+            
+            targetMoveInput = new Vector3(x, 0f, z).normalized;
+        }
+        else
+        {
+            
+            targetMoveInput = Vector3.zero;
+        }
     }
 
     void FixedUpdate()
     {
-        moveInput = Vector3.Lerp(moveInput, targetMoveInput, movementLerpSpeed * Time.fixedDeltaTime);
-
-        // Move
-        Vector3 moveVelocity = moveInput * moveSpeed;
-        rb.velocity = new Vector3(moveVelocity.x, rb.velocity.y, moveVelocity.z);
-
-        // Rotate to face movement direction
-        if (moveInput != Vector3.zero)
+        if (!movementRestricted)
         {
-            Quaternion targetRotation = Quaternion.LookRotation(moveInput, Vector3.up);
-            rb.rotation = Quaternion.Lerp(rb.rotation, targetRotation, movementLerpSpeed * Time.fixedDeltaTime);
+            moveInput = Vector3.Lerp(moveInput, targetMoveInput, movementLerpSpeed * Time.fixedDeltaTime);
+            
+            Vector3 moveVelocity = moveInput * moveSpeed;
+            rb.velocity = new Vector3(moveVelocity.x, rb.velocity.y, moveVelocity.z);
+           
+            if (moveInput != Vector3.zero)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(moveInput, Vector3.up);
+                rb.rotation = Quaternion.Lerp(rb.rotation, targetRotation, movementLerpSpeed * Time.fixedDeltaTime);
+            }
+        }
+        else
+        {
+            
+            rb.velocity = new Vector3(0f, rb.velocity.y, 0f);
         }
     }
 }
