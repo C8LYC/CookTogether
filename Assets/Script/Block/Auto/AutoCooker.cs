@@ -17,6 +17,9 @@ public class AutoCooker : Block
     [SerializeField] int maxIngredients = 3;
     [SerializeField] List<cooked> cookedIngredients= new List<cooked>();
 
+    [SerializeField] private GameObject infoUIPrefab;
+    private BlockInfoUI infoUI;
+
     [Serializable]
     class cooked
     {
@@ -24,8 +27,9 @@ public class AutoCooker : Block
         public List<Ingredients> ingredients;
         
     }
+
     [Serializable]
-   class Ingredients
+    class Ingredients
     {
         public IngredientData ingredient;
         public int amount;
@@ -71,7 +75,7 @@ public class AutoCooker : Block
                             if (currentIngredients.Count < maxIngredients)
                             {
                                 // check whether the ingredient is already in the list
-                                bool found= false;
+                                bool found = false;
                                 foreach (var currentIngredient in currentIngredients)
                                 {
                                     if (currentIngredient.ingredient == ingredient.ingredientData)
@@ -109,7 +113,7 @@ public class AutoCooker : Block
                     player.SetItemHold(Instantiate(currentIngredients[0].ingredient.ingredientPrefab));
                     currentIngredients.Clear();
                 }
-
+                state = CookingState.Idle;
                 break;
         }
 
@@ -137,6 +141,14 @@ public class AutoCooker : Block
 
     private IEnumerator CookCoroutine()
     {
+        if (infoUI == null)
+        {
+            Canvas canvas = FindFirstObjectByType<Canvas>();
+            infoUI = Instantiate(infoUIPrefab, canvas.transform).GetComponent<BlockInfoUI>();
+        }
+        infoUI.target3DObject = this.gameObject.transform;
+        infoUI.SetProgress(0.0f);
+
         state = CookingState.Cooking;
         cookTimer = 0f;
 
@@ -144,14 +156,18 @@ public class AutoCooker : Block
         {
             cookTimer += Time.deltaTime;
             float progress = Mathf.Clamp01(cookTimer / cookTime);
-            
+            infoUI.SetProgress(progress);
 
             yield return null;
         }
 
+        Destroy(infoUI.gameObject);
+        infoUI = null;
+
         state = CookingState.Cooked;
         cookedTransform();
     }
+
     private void cookedTransform()
     {
         // Transform the cooked ingredient into a new item
