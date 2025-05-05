@@ -42,6 +42,7 @@ public class AutoCooker : Block
                     Ingredient ingredient = player.itemHold.GetComponent<Ingredient>();
                     if (ingredient != null)
                     {
+                        if(!allowedIngredients.Contains(ingredient.ingredientData)) return;
                         DestroyImmediate(player.itemHold.gameObject);
                         player.SetItemHold(null);
                         currentIngredients.Add(new Ingredients()

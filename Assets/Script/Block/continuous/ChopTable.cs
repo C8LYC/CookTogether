@@ -48,6 +48,7 @@ public class ChopTable : Block
                     Ingredient ingredient = player.itemHold.GetComponent<Ingredient>();
                     if (ingredient != null)
                     {
+                        if(!allowedIngredients.Contains(ingredient.ingredientData)) return;
                         DestroyImmediate(player.itemHold.gameObject);
                         player.SetItemHold(null);
                         
@@ -68,6 +69,17 @@ public class ChopTable : Block
                         StartChopping(player);
                     }
                 }
+                else if (isChoppingPaused)
+                {
+                        
+                    player.RestrictMovement(true);
+                    isChoppingPaused= false;
+                    StartChopping(player);
+                    
+                        
+                   
+                }
+
                 break;
                 
             case ChoppingState.Chopping:

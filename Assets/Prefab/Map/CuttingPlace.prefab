@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 9159741475157742076}
   - component: {fileID: 7508523620933138380}
   - component: {fileID: 1127158239653795359}
+  - component: {fileID: -1715091807111773294}
   m_Layer: 0
   m_Name: CuttingPlace
   m_TagString: Block
@@ -132,7 +133,19 @@ MonoBehaviour:
     ingredients:
     - ingredient: {fileID: 11400000, guid: dd6cba67e1a300e4db71af760d668070, type: 2}
       amount: 1
-  proximityRadius: 2
+--- !u!114 &-1715091807111773294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 659438237737549590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cd7173da80894f80a926f86c9ddd281, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  height: 1
 --- !u!1001 &3559390241603491943
 PrefabInstance:
   m_ObjectHideFlags: 0
