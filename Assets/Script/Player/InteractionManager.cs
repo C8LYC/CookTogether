@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Player))]
 public class InteractionManager : MonoBehaviour
 {
     public GameObject highlightBoxPrefab;
@@ -30,13 +31,13 @@ public class InteractionManager : MonoBehaviour
             highlightBox.SetActive(true);
             highlightBox.transform.position = closestBlock.transform.position;
 
-            // Interaction input
+            // Interaction input , interact with the block and item first, if failed then interact with the player item, else skip
             if (Input.GetKeyDown(KeyCode.E))
             {
                 Block interactable = closestBlock.GetComponent<Block>();
                 if (interactable != null)
                 {
-                    interactable.Interact();
+                    interactable.Interact(gameObject.GetComponent<Player>());
                 }
                 else
                 {
@@ -58,7 +59,7 @@ public class InteractionManager : MonoBehaviour
         closestBlock = null;
         float closestDistance = float.MaxValue;
 
-        foreach (GameObject block in blocks)
+        foreach (GameObject block in blocks) 
         {
             float distance = Vector3.Distance(transform.position, block.transform.position);
             if (distance < interactRange && distance < closestDistance)

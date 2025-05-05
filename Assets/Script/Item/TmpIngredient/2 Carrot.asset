@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9cbcb536ffd071479f5cecee12623f1, type: 3}
+  m_Name: 2 Carrot
+  m_EditorClassIdentifier: 
+  throwable: 1
+  Name: 2Carrot
+  combinedIngredient: []
+  ingredientPrefab: {fileID: -8354200155130330652, guid: a8b0cb4f9fd3b104da14425f307709a7,
+    type: 3}
+  color: {r: 1, g: 0.37034538, b: 0.035848916, a: 0}
+  sprite: {fileID: 0}

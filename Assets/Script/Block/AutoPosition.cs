@@ -5,7 +5,6 @@ using UnityEngine;
 public class AutoPosition : MonoBehaviour
 {
     public float height = 1.0f;
-    // Start is called before the first frame update
     void Start()
     {
         Vector3 position = transform.position;
@@ -16,10 +15,5 @@ public class AutoPosition : MonoBehaviour
 
         transform.position = position;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 }
