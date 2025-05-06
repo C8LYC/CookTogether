@@ -8,6 +8,8 @@ using UnityEngine.Serialization;
 public class Recipe : ScriptableObject
 {
     [SerializeField] private string recipeName;
+    [SerializeField] private IngredientData _resultMeal;
+    public IngredientData resultMeal => _resultMeal;
     [SerializeField] private Sprite recipeIcon;
     [SerializeField] private float timeLimit = 60f;
     [SerializeField] private float points = 10f;
@@ -25,8 +27,9 @@ public class Recipe : ScriptableObject
     public float TimeLimit => timeLimit;
     public List<Required> Requireds => requireds;
     
-    public float CalculatePoints()
+    public float CalculatePoints(float time)
     {
+        // Calculate points based on time taken
         return points;
     }
     
