@@ -2623,6 +2623,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d594be04310febb4fb7a4b7cb401be53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoUIPrefab: {fileID: 0}
   chopTime: 5
   allowedIngredients:
   - {fileID: 11400000, guid: dd6cba67e1a300e4db71af760d668070, type: 2}

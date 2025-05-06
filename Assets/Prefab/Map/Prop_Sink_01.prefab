@@ -275,6 +275,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd2bb068013a9f1488b27094ec253a5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoUIPrefab: {fileID: 683856484028963410, guid: 3e4a8befcbd794d1d8e653d0a3104396,
+    type: 3}
   washTime: 5
   allowedPlate: {fileID: 11400000, guid: d2e0f84096f19ae4e889934039176b5c, type: 2}
   dirtyPlateCount: 0
@@ -400,6 +402,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca8e842045becf14e8ed3b43116bd024, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoUIPrefab: {fileID: 0}
   plateCount: 0
   cleanPlatePrefab: {fileID: -938521306253172922, guid: e967e7c0340d994498dbf7bfb1c6c9a2,
     type: 3}

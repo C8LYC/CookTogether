@@ -17,8 +17,8 @@ public class AutoCooker : Block
     [SerializeField] int maxIngredients = 3;
     [SerializeField] List<cooked> cookedIngredients= new List<cooked>();
 
-    [SerializeField] private GameObject infoUIPrefab;
-    private BlockInfoUI infoUI;
+    // [SerializeField] private GameObject infoUIPrefab;
+    // private BlockInfoUI infoUI;
 
     [Serializable]
     class cooked
@@ -141,12 +141,7 @@ public class AutoCooker : Block
 
     private IEnumerator CookCoroutine()
     {
-        if (infoUI == null)
-        {
-            Canvas canvas = FindFirstObjectByType<Canvas>();
-            infoUI = Instantiate(infoUIPrefab, canvas.transform).GetComponent<BlockInfoUI>();
-        }
-        infoUI.target3DObject = this.gameObject.transform;
+        SetInfoUIActive(true);
         infoUI.SetProgress(0.0f);
 
         state = CookingState.Cooking;
@@ -161,8 +156,7 @@ public class AutoCooker : Block
             yield return null;
         }
 
-        Destroy(infoUI.gameObject);
-        infoUI = null;
+        SetInfoUIActive(false);
 
         state = CookingState.Cooked;
         cookedTransform();

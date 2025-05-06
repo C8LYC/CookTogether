@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ChopTable : Block
 {
-    private enum ChoppingState { Idle, Chopping, Chopped }
+    private enum ChoppingState { Idle, Paused, Chopping, Chopped }
     private ChoppingState state = ChoppingState.Idle;
     
     [SerializeField] private float chopTime = 5.0f;
@@ -19,7 +19,7 @@ public class ChopTable : Block
     [SerializeField] List<Chopped> choppedIngredients = new List<Chopped>();
     
     private Coroutine chopCoroutine;
-    private bool isChoppingPaused = false;
+    // private bool isChoppingPaused = false;
     
     [Serializable]
     class Chopped
@@ -35,8 +35,6 @@ public class ChopTable : Block
         public int amount;
     }
     
-    
-    
     public override void Interact(Player player)
     {
         switch (state)
@@ -51,17 +49,12 @@ public class ChopTable : Block
                         if(!allowedIngredients.Contains(ingredient.ingredientData)) return;
                         DestroyImmediate(player.itemHold.gameObject);
                         player.SetItemHold(null);
-                        
-                        
-                        if (!isChoppingPaused)
+
+                        currentIngredients.Add(new Ingredients()
                         {
-                            currentIngredients.Add(new Ingredients()
-                            {
-                                ingredient = ingredient.ingredientData,
-                                amount = 1
-                            });
-                        }
-                        
+                            ingredient = ingredient.ingredientData,
+                            amount = 1
+                        });
                         
                         player.RestrictMovement(true);
                         
@@ -69,25 +62,17 @@ public class ChopTable : Block
                         StartChopping(player);
                     }
                 }
-                else if (isChoppingPaused)
-                {
-                        
-                    player.RestrictMovement(true);
-                    isChoppingPaused= false;
-                    StartChopping(player);
-                    
-                        
-                   
-                }
 
+                break;
+
+            case ChoppingState.Paused:
+                player.RestrictMovement(true);
+                StartChopping(player);
                 break;
                 
             case ChoppingState.Chopping:
-                
-                PauseChopping();
-                
-               
                 player.RestrictMovement(false);
+                PauseChopping();
                 break;
                 
             case ChoppingState.Chopped:
@@ -96,12 +81,7 @@ public class ChopTable : Block
                     player.SetItemHold(Instantiate(currentIngredients[0].ingredient.ingredientPrefab));
                     currentIngredients.Clear();
                     state = ChoppingState.Idle;
-                    
-                    
                     savedProgress = 0f;
-                    isChoppingPaused = false;
-                    
-                    
                     player.RestrictMovement(false);
                 }
                 break;
@@ -110,6 +90,7 @@ public class ChopTable : Block
     
     private void StartChopping(Player player)
     {
+        chopTimer = state == ChoppingState.Paused ? savedProgress : 0f;
         state = ChoppingState.Chopping;
         chopCoroutine = StartCoroutine(ChopCoroutine(player));
     }
@@ -120,20 +101,15 @@ public class ChopTable : Block
         {
             StopCoroutine(chopCoroutine);
             chopCoroutine = null;
-            
-            
             savedProgress = chopTimer;
-            isChoppingPaused = true;
-            
-            
-            state = ChoppingState.Idle;
+            state = ChoppingState.Paused;
         }
     }
     
     private IEnumerator ChopCoroutine(Player player)
     {
-        
-        chopTimer = isChoppingPaused ? savedProgress : 0f;
+        SetInfoUIActive(true);
+        infoUI.SetProgress(chopTimer / chopTime);
         
         Debug.Log($"Starting chopping from progress: {chopTimer}/{chopTime}");
         
@@ -141,14 +117,15 @@ public class ChopTable : Block
         {
             chopTimer += Time.deltaTime;
             float progress = Mathf.Clamp01(chopTimer / chopTime);
+            infoUI.SetProgress(progress);
             
             yield return null;
         }
         
         player.RestrictMovement(false);
         state = ChoppingState.Chopped;
-        isChoppingPaused = false;
         savedProgress = 0f;
+        SetInfoUIActive(false);
         ChoppedTransform();
     }
     
