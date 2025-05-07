@@ -18,8 +18,8 @@ public class Recipe : ScriptableObject
     [Serializable]
     public class Required
     {
-        [SerializeField] private Sprite ingredientIcon;
-        [SerializeField] private Sprite operationIcon;
+        public List<Sprite> ingredientIcon;
+        public List<Sprite> operationIcon;
     }
     
     public string Name => recipeName;

@@ -31,7 +31,10 @@ public class OrderDeliveryStation : Block
     }
 
     private Order currentOrder;
-    
+    public List<Order> Orders 
+    {
+        get { return orders; }
+    }
     // Add a new order to the queue
     public void AddOrder(Order newOrder)
     {
